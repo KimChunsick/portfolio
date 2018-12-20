@@ -39,27 +39,60 @@ class PooledObject {
     }
 }
 
-class ScriptParser {
+class ScriptController {
     constructor(script) {
         this.script = script;
+        this.keys = [];
+        this.values = [];
         this.currentIndex = 0;
+
+        for (let i in this.script) {
+
+        }
+    }
+
+    jump(index) {
+        this.currentIndex = index;
     }
 
     parse() {
         let command = this.script[this.currentIndex];
-        return {'key': Object.keys(command)[0], 'body': Object.values(command)[0]};
+        ++this.currentIndex;
+        return {'key': Object.keys(command)[0], 'bodys': Object.values(command)};
     }
 }
 
 class TextWriter {
-    async write(text) {
+    constructor(setting) {
+        this.isTyping = false;
+        this.setting = setting;
+    }
+
+    setTalker(text) {
+        document.querySelector(".dialog_talker").innerHTML = text;
+    }
+
+    async write(talker, text) {
+        this.isTyping = true;
         let typing = '';
         const delay = ms => new Promise(res => setTimeout(res, ms));
-        for (const i in text) {
+        this.setTalker(talker);
+        for (let i in text) {
             typing += text[i];
-            await delay(50);
+            await delay(this.setting.print.speed);
             document.querySelector(".dialog").innerHTML = typing;
         }
+        this.isTyping = false;
+    }
+
+    async add(text) {
+        this.isTyping = true;
+        const delay = ms => new Promise(res => setTimeout(res, ms));
+        for (const i in text) {
+            await delay(this.setting.print.speed);
+            document.querySelector(".dialog").innerHTML += text[i];
+        }
+        this.isTyping = false;
     }
 }
 
@@ -69,9 +102,10 @@ class Engine {
     }
 
     setUp(script, setting) {
+        this.blocks= {};
         this.setting = setting;
-        this.parser = new ScriptParser(script);
-        this.writer = new TextWriter();
+        this.scriptController = new ScriptController(script);
+        this.textWriter = new TextWriter(this.setting);
 
         this.bgm = new Audio();
         this.bgm.loop = true;
@@ -81,28 +115,45 @@ class Engine {
     }
 
     start () {
-        let command = this.parser.parse();
-        this.excuteCommand(command);
+        const self = this;
+        document.addEventListener('click', function() {
+            if (self.textWriter.isTyping && !self.setting.clickToSkipText) {
+                return;
+            }
+            self.excuteCommand();
+        });
     }
 
-    excuteCommand(command) {
-        let body = command.body;
+    excuteCommand() {
+        let command = this.scriptController.parse();
+        let body = command.bodys[0];
         switch (command.key) {
             case 'talk':
-                this.writer.write(body.message);
+                this.textWriter.write(body.talker, body.message);
                 break;
             case 'add':
-                this.writer.write(body.message);
+                this.textWriter.add(body.message);
+                break;
+            case 'block':
+                this.blocks[body.name] = this.scriptController.currentIndex - 1;
+                this.excuteCommand();
+                break;
+            case 'jump':
+                const index = this.blocks[body.to];
+                this.scriptController.jump(index);
+                this.excuteCommand();
+                break;
+            case 'choice':
+                this.showChoices();
+                break;
+            default:
+                console.warn(command.key + "를 실행시킬 수 없습니다.");
+                break;
         }
-        // const _ = {
-        //     'talk': function(body) {
-        //         console.log(this);
-        //         this.writer.write(body.message);
-        //     },
-        //     'add': function(body) {
-        //
-        //     }
-        // }[command.key](command.body);
+    }
+
+    showChoices() {
+
     }
 }
 
