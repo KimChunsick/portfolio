@@ -42,23 +42,61 @@ class PooledObject {
 class ScriptController {
     constructor(script) {
         this.script = script;
-        this.keys = [];
-        this.values = [];
         this.currentIndex = 0;
 
-        for (let i in this.script) {
+        this.keys = [];
+        this.values = [];
+        this.blocks = {};
 
+        for (let i in this.script) {
+            this.keys.push(Object.keys(this.script[i])[0]);
+            this.values.push(Object.values(this.script[i])[0]);
+
+            if (this.keys[i] === 'block') {
+
+                this.blocks[this.values[i].name] = i;
+            }
         }
     }
 
-    jump(index) {
+    jump(key) {
+        const index = this.blocks[key];
         this.currentIndex = index;
     }
 
-    parse() {
-        let command = this.script[this.currentIndex];
-        ++this.currentIndex;
-        return {'key': Object.keys(command)[0], 'bodys': Object.values(command)};
+    getCommand() {
+        let index = this.currentIndex++;
+        return {'key': this.keys[index], 'body': this.values[index]};
+    }
+}
+
+class ChoiceController {
+    constructor() {
+        this.isChoicing = false;
+        this.choiceElement = document.getElementById('choice');
+    }
+
+    showChoice(command, scriptController) {
+        this.isChoicing = true;
+        for (let i in command) {
+            let element = document.createElement('button');
+            let node = document.createTextNode([command[i].message]);
+            element.onclick = () => {
+                this.removeChoices();
+                scriptController.jump(command[i].to);
+            };
+            element.id = '';
+            element.appendChild(node);
+            this.choiceElement.appendChild(element);
+        }
+    }
+
+    removeChoices() {
+        const children = this.choiceElement.children;
+        while (children.length !== 0) {
+            this.choiceElement.removeChild(children[0]);
+        }
+        this.isChoicing = false;
     }
 }
 
@@ -102,14 +140,14 @@ class Engine {
     }
 
     setUp(script, setting) {
-        this.blocks= {};
         this.setting = setting;
+
         this.scriptController = new ScriptController(script);
+        this.choiceController = new ChoiceController();
         this.textWriter = new TextWriter(this.setting);
 
         this.bgm = new Audio();
         this.bgm.loop = true;
-
         this.voice = new Audio();
         this.sfxPool = new ObjectPool(Audio, 3);
     }
@@ -117,7 +155,7 @@ class Engine {
     start () {
         const self = this;
         document.addEventListener('click', function() {
-            if (self.textWriter.isTyping && !self.setting.clickToSkipText) {
+            if ((self.textWriter.isTyping ||  self.choiceController.isChoicing) && !self.setting.clickToSkipText) {
                 return;
             }
             self.excuteCommand();
@@ -125,8 +163,8 @@ class Engine {
     }
 
     excuteCommand() {
-        let command = this.scriptController.parse();
-        let body = command.bodys[0];
+        let command = this.scriptController.getCommand();
+        let body = command.body;
         switch (command.key) {
             case 'talk':
                 this.textWriter.write(body.talker, body.message);
@@ -135,25 +173,34 @@ class Engine {
                 this.textWriter.add(body.message);
                 break;
             case 'block':
-                this.blocks[body.name] = this.scriptController.currentIndex - 1;
                 this.excuteCommand();
                 break;
             case 'jump':
-                const index = this.blocks[body.to];
-                this.scriptController.jump(index);
+                this.scriptController.jump(body.to);
                 this.excuteCommand();
                 break;
             case 'choice':
-                this.showChoices();
+                this.choiceController.showChoice(body, this.scriptController);
+                break;
+            case 'bgm': {
+                    const path = 'assets/sounds/bgm/';
+                    this.bgm.src = path + body.filename;
+                    this.bgm.play();
+                    this.excuteCommand();
+                }
+                break;
+            case 'sfx': {
+                    const path = 'assets/sounds/sfx/';
+                    const sfx = this.sfxPool.getObject();
+                    sfx.src = path + body.filename;
+                    sfx.play();
+                    this.excuteCommand();
+                }
                 break;
             default:
                 console.warn(command.key + "를 실행시킬 수 없습니다.");
                 break;
         }
-    }
-
-    showChoices() {
-
     }
 }
 
