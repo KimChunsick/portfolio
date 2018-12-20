@@ -160,7 +160,7 @@ class Engine {
             }
             self.excuteCommand();
         });
-        document.addEventListener('DOMContentLoaded', self.excuteCommand(), false);
+        document.addEventListener('DOMContentLoaded', self.excuteCommand.bind(this), false);
     }
 
     excuteCommand() {
