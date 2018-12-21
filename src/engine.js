@@ -154,13 +154,13 @@ class Engine {
 
     start () {
         const self = this;
+        self.excuteCommand();
         document.addEventListener('click', function() {
             if ((self.textWriter.isTyping ||  self.choiceController.isChoicing) && !self.setting.clickToSkipText) {
                 return;
             }
             self.excuteCommand();
         });
-        document.addEventListener('DOMContentLoaded', self.excuteCommand.bind(this), false);
     }
 
     excuteCommand() {
