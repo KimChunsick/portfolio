@@ -9,6 +9,7 @@ class ResourcePreloader {
         ];
 
         this.preloadPromises = [];
+        this.loadingSection = document.getElementsByClassName('loading')[0];
         this.progress = document.getElementById('loading_progress');
         this.progress.setAttribute('max', this.targets.length.toString());
     }
@@ -18,10 +19,8 @@ class ResourcePreloader {
             let path = this.targets[i];
             // console.log(typeof target);
             if (path.includes('sounds')) {
-                console.log(path);
                 this.preloadPromises.push(this.loadAudio(path));
             } else if (path.includes('images')) {
-                console.log(path);
                 this.preloadPromises.push(this.loadImage(path));
             }
         }
@@ -30,6 +29,7 @@ class ResourcePreloader {
         Promise.all(this.preloadPromises).then(function () {
             console.log('로딩 종료.');
             self.progress.hidden = true;
+            self.loadingSection.hidden = true;
             callback();
         }).catch (function (error) {
             console.error(error);

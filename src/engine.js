@@ -118,7 +118,7 @@ class TextWriter {
         for (let i in text) {
             typing += text[i];
             await delay(this.setting.print.speed);
-            document.querySelector(".dialog").innerHTML = typing;
+            document.querySelector(".dialog_text").innerHTML = typing;
         }
         this.isTyping = false;
     }
@@ -128,9 +128,24 @@ class TextWriter {
         const delay = ms => new Promise(res => setTimeout(res, ms));
         for (const i in text) {
             await delay(this.setting.print.speed);
-            document.querySelector(".dialog").innerHTML += text[i];
+            document.querySelector(".dialog_text").innerHTML += text[i];
         }
         this.isTyping = false;
+    }
+}
+
+class BGController {
+    constructor() {
+        this.bgs = document.getElementById('bgs');
+
+    }
+
+    showBG() {
+
+    }
+
+    swapBG() {
+
     }
 }
 
@@ -150,10 +165,13 @@ class Engine {
         this.bgm.loop = true;
         this.voice = new Audio();
         this.sfxPool = new ObjectPool(Audio, 3);
+
+        this.gameSection = document.getElementsByClassName('game')[0];
     }
 
     start () {
         const self = this;
+        this.gameSection.style.display = 'block';
         self.excuteCommand();
         document.addEventListener('click', function() {
             if ((self.textWriter.isTyping ||  self.choiceController.isChoicing) && !self.setting.clickToSkipText) {

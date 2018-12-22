@@ -1,3 +1,25 @@
+.full-screen {
+    width: 100vw;
+    height: 100vh;
+}
+
+.align-middle {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
+html {
+    height: 100vh;
+    width: 100vw;
+}
+
 body {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -5,4 +27,93 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+
+    height: 100vh;
+    width: 100vw;
+    max-height: 100vh;
+    max-width: 100vw;
+
+    font-size: 1rem;
+    text-align: center;
+    overflow: hidden;
+    margin: 0;
+
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+    color: rgba(0, 0, 0);
+    background-color: #f7f7f7;
+}
+
+section.loading > div > small {
+    display: block;
+}
+
+/* 로딩 */
+progress {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    margin: 1em auto;
+    display: block;
+    border-radius: 10vh;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2) inset;
+    background: transparent;
+    width: 70vw;
+}
+
+progress::-webkit-progress-bar {
+    background: transparent;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2) inset;
+    border-radius: 10vh;
+}
+
+progress::-webkit-progress-value {
+    background-color: #FA7268;
+    border-radius: 10vh;
+}
+
+progress::-moz-progress-bar {
+    background-color: #FA7268;
+    border-radius: 10vh;
+}
+
+/* 게임 */
+section.game {
+    /*display: none;*/
+    width: 100vw;
+    color: inherit;
+}
+
+section.game > div.dialog {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+
+    text-align: left;
+    overflow-y: auto;
+    width: 100%;
+    min-height: 20%;
+    max-height: 25%;
+
+    position: absolute;
+    bottom: 0;
+}
+
+section.game > div.dialog > span {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 1vmin;
+    margin: 0;
+}
+
+section.game > div.dialog > p {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 1vmin;
+    margin: 0;
 }
