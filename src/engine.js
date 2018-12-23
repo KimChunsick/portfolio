@@ -165,17 +165,16 @@ class Engine {
         this.bgm.loop = true;
         this.voice = new Audio();
         this.sfxPool = new ObjectPool(Audio, 3);
-
+        this.touchEvent = (navigator.userAgent.match(/iPad/i)) ? 'touchstart' : 'click';
         this.gameSection = document.getElementsByClassName('game')[0];
     }
 
     start () {
         const self = this;
-        const debug = document.getElementById('debug');
         this.gameSection.style.display = 'block';
         self.excuteCommand();
-        document.querySelector('body').addEventListener('click', function() {
-            debug.innerHTML = self.textWriter.isTyping.toString() + "/" +  self.choiceController.isChoicing + "/" + self.setting.print.clickToSkipText;
+        document.addEventListener(this.touchEvent, function() {
+            console.log('isTyping: ' + self.textWriter.isTyping +'/isChoicing: ' + self.choiceController.isChoicing +'/clickToSkipText: ' + self.setting.print.clickToSkipText);
             if ((self.textWriter.isTyping ||  self.choiceController.isChoicing) && self.setting.print.clickToSkipText) {
                 return;
             }
