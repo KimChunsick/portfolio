@@ -174,7 +174,7 @@ class Engine {
         const debug = document.getElementById('debug');
         this.gameSection.style.display = 'block';
         self.excuteCommand();
-        document.addEventListener('click', function() {
+        document.querySelector('body').addEventListener('click', function() {
             debug.innerHTML = self.textWriter.isTyping.toString() + "/" +  self.choiceController.isChoicing + "/" + self.setting.print.clickToSkipText;
             if ((self.textWriter.isTyping ||  self.choiceController.isChoicing) && self.setting.print.clickToSkipText) {
                 return;
