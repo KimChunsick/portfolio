@@ -171,10 +171,12 @@ class Engine {
 
     start () {
         const self = this;
+        // const debug = document.getElementById('debug');
         this.gameSection.style.display = 'block';
         self.excuteCommand();
         document.addEventListener('click', function() {
-            if ((self.textWriter.isTyping ||  self.choiceController.isChoicing) && !self.setting.clickToSkipText) {
+            // debug.innerHTML = self.textWriter.isTyping.toString() + "/" +  self.choiceController.isChoicing + "/" + self.setting.print.clickToSkipText;
+            if ((self.textWriter.isTyping ||  self.choiceController.isChoicing) && !self.setting.print.clickToSkipText) {
                 return;
             }
             self.excuteCommand();
