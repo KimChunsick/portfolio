@@ -165,7 +165,7 @@ class Engine {
         this.bgm.loop = true;
         this.voice = new Audio();
         this.sfxPool = new ObjectPool(Audio, 3);
-        this.touchEvent = (navigator.userAgent.match(/iPad/i)) ? 'touchstart' : 'click';
+        this.touchEvent = (navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPhone/i)) ? 'touchstart' : 'click';
         this.gameSection = document.getElementsByClassName('game')[0];
     }
 
