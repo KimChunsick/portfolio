@@ -172,6 +172,7 @@ class Engine {
     start () {
         const self = this;
         this.gameSection.style.display = 'block';
+        console.log(this.touchEvent);
         self.excuteCommand();
         document.addEventListener(this.touchEvent, function() {
             console.log('isTyping: ' + self.textWriter.isTyping +'/isChoicing: ' + self.choiceController.isChoicing +'/clickToSkipText: ' + self.setting.print.clickToSkipText);
