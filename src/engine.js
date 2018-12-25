@@ -1,109 +1,11 @@
 "use strict";
 
-class ObjectPool {
-    constructor(template, init_count) {
-        this.pool = [];
-        this.template = template;
-
-        for (let i = 0; i < init_count; ++i) {
-            this.pool.push(this.makeInstance());
-        }
-    }
-
-    makeInstance() {
-        return new this.template();
-    }
-
-    addObject(object) {
-        object.pool = this;
-        this.pool.push(object);
-    }
-
-    getObject() {
-        if (this.pool.length === 0) {
-            return this.pool.pop();
-        }
-        let object = this.makeInstance();
-        object.pool = this;
-        return object;
-    }
-}
-
-class PooledObject {
-    constructor() {
-        this.pool = null;
-    }
-
-    backToPool() {
-        this.pool.addObject(this);
-    }
-}
-
-class ScriptController {
-    constructor(script) {
-        this.script = script;
-        this.currentIndex = 0;
-
-        this.keys = [];
-        this.values = [];
-        this.blocks = {};
-
-        for (let i in this.script) {
-            this.keys.push(Object.keys(this.script[i])[0]);
-            this.values.push(Object.values(this.script[i])[0]);
-
-            if (this.keys[i] === 'block') {
-
-                this.blocks[this.values[i].name] = i;
-            }
-        }
-    }
-
-    jump(key) {
-        const index = this.blocks[key];
-        this.currentIndex = index;
-    }
-
-    getCommand() {
-        let index = this.currentIndex++;
-        return {'key': this.keys[index], 'body': this.values[index]};
-    }
-}
-
-class ChoiceController {
-    constructor() {
-        this.isChoicing = false;
-        this.choiceElement = document.getElementById('choice');
-    }
-
-    showChoice(command, scriptController) {
-        this.isChoicing = true;
-        for (let i in command) {
-            let element = document.createElement('button');
-            let node = document.createTextNode([command[i].message]);
-            element.onclick = () => {
-                this.removeChoices();
-                scriptController.jump(command[i].to);
-            };
-            element.id = '';
-            element.appendChild(node);
-            this.choiceElement.appendChild(element);
-        }
-    }
-
-    removeChoices() {
-        const children = this.choiceElement.children;
-        while (children.length !== 0) {
-            this.choiceElement.removeChild(children[0]);
-        }
-        this.isChoicing = false;
-    }
-}
+import setting from './settings.js'
+import { notifyCenter, scriptController, choiceController, bgConrtoller, NotificationCenter, NotificationName, ObjectPool } from './controllers.js'
 
 class TextWriter {
-    constructor(setting) {
+    constructor() {
         this.isTyping = false;
-        this.setting = setting;
     }
 
     setTalker(text) {
@@ -117,7 +19,7 @@ class TextWriter {
         this.setTalker(talker);
         for (let i in text) {
             typing += text[i];
-            await delay(this.setting.print.speed);
+            await delay(setting.print.speed);
             document.querySelector(".dialog_text").innerHTML = typing;
         }
         this.isTyping = false;
@@ -127,39 +29,20 @@ class TextWriter {
         this.isTyping = true;
         const delay = ms => new Promise(res => setTimeout(res, ms));
         for (const i in text) {
-            await delay(this.setting.print.speed);
+            await delay(setting.print.speed);
             document.querySelector(".dialog_text").innerHTML += text[i];
         }
         this.isTyping = false;
     }
 }
 
-class BGController {
-    constructor() {
-        this.bgs = document.getElementById('bgs');
-
-    }
-
-    showBG() {
-
-    }
-
-    swapBG() {
-
-    }
-}
-
 class Engine {
-    constructor(init_script, settings) {
-        this.setUp(init_script, settings);
+    constructor() {
+        this.setUp();
     }
 
-    setUp(script, setting) {
-        this.setting = setting;
-
-        this.scriptController = new ScriptController(script);
-        this.choiceController = new ChoiceController();
-        this.textWriter = new TextWriter(this.setting);
+    setUp() {
+        this.textWriter = new TextWriter();
 
         this.bgm = new Audio();
         this.bgm.loop = true;
@@ -167,55 +50,61 @@ class Engine {
         this.sfxPool = new ObjectPool(Audio, 3);
         this.touchEvent = (navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPhone/i)) ? 'touchstart' : 'click';
         this.gameSection = document.getElementsByClassName('game')[0];
+
+        notifyCenter.addSubscriber(NotificationName.select, this.excuteCommand);
     }
 
     start () {
-        const self = this;
-        this.gameSection.style.display = 'block';
-        console.log(this.touchEvent);
-        self.excuteCommand();
-        document.addEventListener(this.touchEvent, function() {
-            console.log('isTyping: ' + self.textWriter.isTyping +'/isChoicing: ' + self.choiceController.isChoicing +'/clickToSkipText: ' + self.setting.print.clickToSkipText);
-            if ((self.textWriter.isTyping ||  self.choiceController.isChoicing) && self.setting.print.clickToSkipText) {
+        engine.gameSection.style.display = 'block';
+        engine.excuteCommand();
+        document.addEventListener(engine.touchEvent, function() {
+            if ((engine.textWriter.isTyping ||  choiceController.isChoicing) && setting.print.clickToSkipText) {
                 return;
             }
-            self.excuteCommand();
+            engine.excuteCommand();
         });
     }
 
     excuteCommand() {
-        let command = this.scriptController.getCommand();
+        let command = scriptController.getCommand();
         let body = command.body;
         switch (command.key) {
             case 'talk':
-                this.textWriter.write(body.talker, body.message);
+                engine.textWriter.write(body.talker, body.message);
                 break;
             case 'add':
-                this.textWriter.add(body.message);
+                engine.textWriter.add(body.message);
                 break;
             case 'block':
-                this.excuteCommand();
+                engine.excuteCommand();
                 break;
             case 'jump':
-                this.scriptController.jump(body.to);
-                this.excuteCommand();
+                scriptController.jump(body.to);
+                engine.excuteCommand();
                 break;
             case 'choice':
-                this.choiceController.showChoice(body, this.scriptController);
+                choiceController.showChoice(body);
                 break;
             case 'bgm': {
                     const path = 'assets/sounds/bgm/';
-                    this.bgm.src = path + body.filename;
-                    this.bgm.play();
-                    this.excuteCommand();
+                    engine.bgm.src = path + body.filename;
+                    engine.bgm.play().catch(function (error) {
+                        console.log(error);
+                    });
+                    engine.excuteCommand();
                 }
                 break;
             case 'sfx': {
                     const path = 'assets/sounds/sfx/';
                     const sfx = this.sfxPool.getObject();
                     sfx.src = path + body.filename;
-                    sfx.play();
-                    this.excuteCommand();
+                    sfx.play().catch(function (error) {
+                        console.log(error);
+                    });
+                    sfx.onended = function () {
+                        sfx.pool.backToPool(sfx);
+                    };
+                    engine.excuteCommand();
                 }
                 break;
             default:
@@ -225,4 +114,6 @@ class Engine {
     }
 }
 
-export { Engine };
+let engine = new Engine();
+
+export { engine };
