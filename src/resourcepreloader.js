@@ -6,7 +6,9 @@ class ResourcePreloader {
             'assets/images/bgs/park_afternoon.png',
             'assets/images/bgs/park_evening.png',
             'assets/images/bgs/park_night.png',
-            'assets/sounds/bgm/Zombie_March.mp3',
+            'assets/images/bgs/art-gallery1.jpg',
+            'assets/images/bgs/art-gallery2.jpg',
+            'assets/sounds/bgm/Sad_Minuet.mp3',
             'assets/sounds/sfx/shooting_star.mp3',
         ];
 

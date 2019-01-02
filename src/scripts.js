@@ -2,9 +2,9 @@
 
 const test = [
     {'block': {'name': 'start'}},
-    {'bg': {'filename': 'park_afternoon.png'}},
+    {'bg': {'filename': 'art-gallery1.jpg'}},
     {'talk': {'talker': '테스트', 'message': '테스트입니다.테스트입니다.테스트입니다.테스트입니다.테스트입니다.'}},
-    {'bgm': {'filename': 'Zombie_March.mp3'}},
+    {'bgm': {'filename': 'Sad_Minuet.mp3'}},
     {'talk': {'talker': '마을사람A', 'message': '지나가는중...'}},
     {'sfx': {'filename': 'shooting_star.mp3'}},
     {'bg_change': {'filename': 'park_evening.png'}},

@@ -88,7 +88,8 @@ class Engine {
             case 'bgm': {
                     const path = 'assets/sounds/bgm/';
                     engine.bgm.src = path + body.filename;
-                    engine.bgm.autoplay = true;
+                    engine.bgm.loop = true;
+                    // engine.bgm.
                     engine.bgm.play().catch(function (error) {
                         console.log(error);
                     });
