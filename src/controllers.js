@@ -119,16 +119,28 @@ class ChoiceController {
 
 class BGController {
     constructor() {
-        this.bgs = document.getElementById('bgs');
-
+        this.path = 'url(assets/images/bgs/${replace}$)';
+        this.backBg = document.getElementById('back_bg');
+        this.frontBg = document.getElementById('front_bg');
+        document.addEventListener("transitionend", this.endAnimation);
     }
 
-    showBG() {
-
+    showBG(fileName) {
+        let path = bgConrtoller.path.replace('${replace}$', fileName);
+        bgConrtoller.backBg.style.backgroundImage = path;
+        bgConrtoller.backBg.style.opacity = '1';
     }
 
-    swapBG() {
+    swapBG(newBGFileName) {
+        bgConrtoller.frontBg.style.opacity = '0';
+        let path = bgConrtoller.path.replace('${replace}$', newBGFileName);
+        bgConrtoller.frontBg.style.backgroundImage = path;
+        bgConrtoller.frontBg.style.opacity = '1';
+    }
 
+    endAnimation() {
+        bgConrtoller.backBg.style.backgroundImage = bgConrtoller.frontBg.style.backgroundImage;
+        bgConrtoller.frontBg.style.opacity = '0';
     }
 }
 
@@ -140,5 +152,5 @@ let bgConrtoller = new BGController();
 
 notifyCenter.addSubscriber(NotificationName.select, scriptController.jump);
 
-export { notifyCenter, scriptController, choiceController, bgConrtoller, NotificationCenter, NotificationName, ObjectPool };
+export { notifyCenter, scriptController, choiceController, bgConrtoller, NotificationName, ObjectPool };
 

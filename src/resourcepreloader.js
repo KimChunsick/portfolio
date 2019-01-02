@@ -3,7 +3,9 @@
 class ResourcePreloader {
     constructor() {
         this.targets = [
-            'assets/images/share.png',
+            'assets/images/bgs/park_afternoon.png',
+            'assets/images/bgs/park_evening.png',
+            'assets/images/bgs/park_night.png',
             'assets/sounds/bgm/Zombie_March.mp3',
             'assets/sounds/sfx/shooting_star.mp3',
         ];
@@ -27,10 +29,12 @@ class ResourcePreloader {
 
         const self = this;
         Promise.all(this.preloadPromises).then(function () {
-            console.log('로딩 종료.');
-            self.progress.hidden = true;
-            self.loadingSection.hidden = true;
-            callback();
+            setTimeout(function () {
+                console.log('로딩 종료.');
+                self.progress.hidden = true;
+                self.loadingSection.hidden = true;
+                callback();
+            }, 1000);
         }).catch (function (error) {
             console.error(error);
         });

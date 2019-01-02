@@ -1,7 +1,7 @@
 "use strict";
 
 import setting from './settings.js'
-import { notifyCenter, scriptController, choiceController, bgConrtoller, NotificationCenter, NotificationName, ObjectPool } from './controllers.js'
+import { notifyCenter, scriptController, choiceController, bgConrtoller, NotificationName, ObjectPool } from './controllers.js'
 
 class TextWriter {
     constructor() {
@@ -88,6 +88,7 @@ class Engine {
             case 'bgm': {
                     const path = 'assets/sounds/bgm/';
                     engine.bgm.src = path + body.filename;
+                    engine.bgm.autoplay = true;
                     engine.bgm.play().catch(function (error) {
                         console.log(error);
                     });
@@ -106,6 +107,14 @@ class Engine {
                     };
                     engine.excuteCommand();
                 }
+                break;
+            case 'bg':
+                bgConrtoller.showBG(body.filename);
+                engine.excuteCommand();
+                break;
+            case 'bg_change':
+                bgConrtoller.swapBG(body.filename);
+                engine.excuteCommand();
                 break;
             default:
                 console.warn(command.key + "를 실행시킬 수 없습니다.");
