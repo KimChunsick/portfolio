@@ -1,6 +1,7 @@
 "use strict";
 
-import { test, test2 } from "./scripts.js";
+import { test, helloworld } from "./scripts.js";
+import setting from "./settings.js";
 
 class ObjectPool {
     constructor(template, init_count) {
@@ -88,6 +89,92 @@ class ScriptController {
     }
 }
 
+class TextWriter {
+    constructor() {
+        this.isTyping = false;
+        this.talker = document.querySelector('.dialog_talker');
+        this.text = document.querySelector('.dialog_text');
+        this.monologue = document.getElementById('monologue');
+    }
+
+    setTalker(text) {
+        textWriter.talker.innerHTML = text;
+    }
+
+    async write(talker, text) {
+        textWriter.isTyping = true;
+        let typing = '';
+        const delay = ms => new Promise(res => setTimeout(res, ms));
+        textWriter.setTalker(talker);
+        for (let i in text) {
+            typing += text[i];
+            await delay(setting.print.speed);
+            textWriter.text.innerHTML = typing;
+        }
+        textWriter.isTyping = false;
+    }
+
+    async add(text) {
+        textWriter.isTyping = true;
+        const delay = ms => new Promise(res => setTimeout(res, ms));
+        for (const i in text) {
+            await delay(setting.print.speed);
+            textWriter.text.innerHTML += text[i];
+        }
+        textWriter.isTyping = false;
+    }
+
+    async writeMologue(text) {
+        textWriter.isTyping = true;
+        let typing = '';
+        const delay = ms => new Promise(res => setTimeout(res, ms));
+        for (let i in text) {
+            typing += text[i];
+            await delay(setting.print.speed);
+            textWriter.monologue.innerHTML = typing;
+        }
+        textWriter.isTyping = false;
+    }
+
+    async addMologue(text) {
+        textWriter.isTyping = true;
+        const delay = ms => new Promise(res => setTimeout(res, ms));
+        for (const i in text) {
+            await delay(setting.print.speed);
+            textWriter.monologue.innerHTML += text[i];
+        }
+        textWriter.isTyping = false;
+    }
+
+    enable() {
+        textWriter.enableDialog();
+        textWriter.enableMologue();
+    }
+
+    disable() {
+        textWriter.disableDialog();
+        textWriter.disableMologue();
+    }
+
+    enableDialog() {
+        textWriter.text.style.display = 'block';
+        textWriter.talker.style.display = 'block';
+    }
+
+    disableDialog() {
+        textWriter.text.style.display = 'none';
+        textWriter.talker.style.display = 'none';
+    }
+
+    enableMologue() {
+        textWriter.monologue.style.display = 'block';
+    }
+
+    disableMologue() {
+        textWriter.monologue.style.display = 'none';
+    }
+}
+
 class ChoiceController {
     constructor() {
         this.isChoicing = false;
@@ -142,15 +229,26 @@ class BGController {
         bgConrtoller.backBg.style.backgroundImage = bgConrtoller.frontBg.style.backgroundImage;
         bgConrtoller.frontBg.style.opacity = '0';
     }
+
+    enable() {
+        bgConrtoller.backBg.style.display = 'block';
+        bgConrtoller.frontBg.style.display = 'block';
+    }
+
+    disable() {
+        bgConrtoller.backBg.style.display = 'none';
+        bgConrtoller.frontBg.style.display = 'none';
+    }
 }
 
 
 let notifyCenter = new NotificationCenter();
-let scriptController = new ScriptController(test);
+let scriptController = new ScriptController(helloworld);
 let choiceController = new ChoiceController();
 let bgConrtoller = new BGController();
+let textWriter = new TextWriter();
 
 notifyCenter.addSubscriber(NotificationName.select, scriptController.jump);
 
-export { notifyCenter, scriptController, choiceController, bgConrtoller, NotificationName, ObjectPool };
+export { notifyCenter, scriptController, choiceController, bgConrtoller, textWriter, NotificationName, ObjectPool };
 

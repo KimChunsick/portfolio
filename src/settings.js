@@ -1,6 +1,6 @@
 "use strict";
 
-var settings = {
+let settings = {
     // 소리 관련
     'volume': {
         'bgm': 1.0,
