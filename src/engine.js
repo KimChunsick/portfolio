@@ -5,16 +5,16 @@ import { notifyCenter, scriptController, choiceController, bgConrtoller, textWri
 
 class Engine {
     constructor() {
-        var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-        if(!isChrome){
+        // if (isChrome) {
+            // console.log('chrome');
+            // this.bgm = new Audio();
+            // this.bgm.loop = true;
+        // } else {
+        //     console.log('not c');
+        //     document.getElementById('audio').remove();
             this.bgm = new Audio();
             this.bgm.loop = true;
-            document.getElementById('audio').remove();
-        }
-        else{
-            this.bgm = document.getElementById('audio');
-            this.bgm.loop = true;
-        }
+        // }
 
         this.voice = new Audio();
         this.sfxPool = new ObjectPool(Audio, 3);
@@ -41,6 +41,7 @@ class Engine {
         let body = command.body;
         bgConrtoller.enable();
         textWriter.enableDialog();
+        textWriter.monologue.innerHTML = '';
         if (command.key === 'talk') {
             textWriter.write(body.talker, body.message);
         } else if (command.key === 'add') {
@@ -56,7 +57,6 @@ class Engine {
             {
                 const path = 'assets/sounds/bgm/';
                 engine.bgm.setAttribute("src", (path + body.filename));
-                engine.bgm.setAttribute("autoplay", '');
                 engine.bgm.play().catch(function (error) {
                     console.log(error.toLocaleString());
                 });
@@ -85,6 +85,9 @@ class Engine {
             bgConrtoller.disable();
             textWriter.disableDialog();
             textWriter.writeMologue(body.message);
+        } else if (command.key === 'script') {
+            scriptController.changeScript(body.name);
+            engine.excuteCommand();
         } else {
             console.warn(command.key + "를 실행시킬 수 없습니다.");
         }

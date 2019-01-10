@@ -1,6 +1,6 @@
 "use strict";
 
-import { test, helloworld } from "./scripts.js";
+import scripts from "./scripts.js";
 import setting from "./settings.js";
 
 class ObjectPool {
@@ -79,6 +79,10 @@ class ScriptController {
         }
     }
 
+    init() {
+
+    }
+
     jump(key) {
         scriptController.currentIndex = scriptController.blocks[key];
     }
@@ -86,6 +90,24 @@ class ScriptController {
     getCommand() {
         let index = scriptController.currentIndex++;
         return {'key': scriptController.keys[index], 'body': scriptController.values[index]};
+    }
+
+    changeScript(scriptName) {
+        scriptController.script = scripts[scriptName];
+        scriptController.currentIndex = 0;
+
+        scriptController.keys = [];
+        scriptController.values = [];
+        scriptController.blocks = {};
+
+        for (let i in scriptController.script) {
+            scriptController.keys.push(Object.keys(scriptController.script[i])[0]);
+            scriptController.values.push(Object.values(scriptController.script[i])[0]);
+
+            if (scriptController.keys[i] === 'block') {
+                scriptController.blocks[scriptController.values[i].name] = i;
+            }
+        }
     }
 }
 
@@ -243,7 +265,7 @@ class BGController {
 
 
 let notifyCenter = new NotificationCenter();
-let scriptController = new ScriptController(helloworld);
+let scriptController = new ScriptController(scripts.helloworld);
 let choiceController = new ChoiceController();
 let bgConrtoller = new BGController();
 let textWriter = new TextWriter();
