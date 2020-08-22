@@ -3,6 +3,7 @@ import Dialog from '@/components/Dialog'
 import BG from '@/components/BG'
 import Monologue from '@/components/Monologue'
 import Choices from '@/components/Choices'
+import Guide from '@/components/Guide'
 // import script from '@/assets/script/test'
 
 import './style.css'
@@ -14,7 +15,8 @@ class InGameScene extends Component {
     this.bg = new BG()
     this.monologue = new Monologue()
     this.choices = new Choices()
-    this.addChildren(this.dialog, this.bg, this.monologue, this.choices)
+    this.guide = new Guide()
+    this.addChildren(this.dialog, this.bg, this.monologue, this.choices, this.guide)
   }
 
   mount() {
@@ -22,21 +24,24 @@ class InGameScene extends Component {
     this.dialog.setName('테스트', 'red')
     this.dialog.doTalk('하하하하하하하하하하하')
     setTimeout(() => {
-      this.bg.changeBG('park_evening')
+      this.guide.changeState('idle')
     }, 300)
-    setTimeout(() => {
-      this.monologue.show('Chrome 브라우저로 보시는 것을 권장합니다.')
-    }, 1000)
-    setTimeout(() => {
-      this.monologue.hide()
-    }, 4000)
-    setTimeout(() => {
-      this.choices.show([
-        { text: '1번 테스트', value: 'block1' },
-        { text: '2번 테스트', value: 'block1' },
-        { text: '3번 테스트', value: 'block1' },
-      ])
-    }, 4500)
+    // setTimeout(() => {
+    //   this.bg.changeBG('park_evening')
+    // }, 300)
+    // setTimeout(() => {
+    //   this.monologue.show('Chrome 브라우저로 보시는 것을 권장합니다.')
+    // }, 1000)
+    // setTimeout(() => {
+    //   this.monologue.hide()
+    // }, 4000)
+    // setTimeout(() => {
+    //   this.choices.show([
+    //     { text: '1번 테스트', value: 'block1' },
+    //     { text: '2번 테스트', value: 'block1' },
+    //     { text: '3번 테스트', value: 'block1' },
+    //   ])
+    // }, 4500)
   }
 
   render() {
@@ -45,6 +50,7 @@ class InGameScene extends Component {
       ${this.dialog.render()}
       ${this.monologue.render()}
       ${this.choices.render()}
+      ${this.guide.render()}
       `,
        [ { name: 'class', value: 'in-game-scene' } ],
        'section')
