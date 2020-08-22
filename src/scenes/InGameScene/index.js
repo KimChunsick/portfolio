@@ -2,6 +2,7 @@ import Component from '@/components/common/component'
 import Dialog from '@/components/Dialog'
 import BG from '@/components/BG'
 import Monologue from '@/components/Monologue'
+import Choices from '@/components/Choices'
 // import script from '@/assets/script/test'
 
 import './style.css'
@@ -12,7 +13,8 @@ class InGameScene extends Component {
     this.dialog = new Dialog()
     this.bg = new BG()
     this.monologue = new Monologue()
-    this.addChildren(this.dialog, this.bg, this.monologue)
+    this.choices = new Choices()
+    this.addChildren(this.dialog, this.bg, this.monologue, this.choices)
   }
 
   mount() {
@@ -28,6 +30,13 @@ class InGameScene extends Component {
     setTimeout(() => {
       this.monologue.hide()
     }, 4000)
+    setTimeout(() => {
+      this.choices.show([
+        { text: '1번 테스트', value: 'block1' },
+        { text: '2번 테스트', value: 'block1' },
+        { text: '3번 테스트', value: 'block1' },
+      ])
+    }, 4500)
   }
 
   render() {
@@ -35,6 +44,7 @@ class InGameScene extends Component {
       ${this.bg.render()}
       ${this.dialog.render()}
       ${this.monologue.render()}
+      ${this.choices.render()}
       `,
        [ { name: 'class', value: 'in-game-scene' } ],
        'section')

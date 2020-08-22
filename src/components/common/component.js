@@ -15,7 +15,6 @@ class Component {
 	}
 
 	setStates(states) {
-		('setStates:', this.uniqueId)
 		this.willChangeStates(states)
 		this.states = { ...this.states, ...states }
 		if (this.ref) {
@@ -45,18 +44,22 @@ class Component {
 		return targetArr.map(func).toString().replace(/,/gi, '')
 	}
 
+	renderAlreadyCreatedElement(children, attributes = []) {
+		for (const attribute of this.ref.attributes) {
+			if (attribute.name === 'unique') {
+				continue
+			}
+			this.ref.removeAttribute(attribute.name)
+		}
+		for (const { name, value } of attributes) {
+			this.ref.setAttribute(name, value)
+		}
+		return children
+	}
+
 	render(children, attributes = [], tag = 'div') {
 		if (this.ref) {
-			for (const attribute of this.ref.attributes) {
-				if (attribute.name === 'unique') {
-					continue
-				}
-				this.ref.removeAttribute(attribute.name)
-			}
-			for (const { name, value } of attributes) {
-				this.ref.setAttribute(name, value)
-			}
-			return children
+			return this.renderAlreadyCreatedElement(children, attributes)
 		}
 
 		const element = document.createElement(tag)
@@ -87,13 +90,17 @@ class Component {
 
 	willChangeStates(states) {
 		for (const child of this.children) {
-			child.willChangeStates(states)
+			if (child.willChangeStates) {
+				child.willChangeStates(states)
+			}
 		}
 	}
 
 	didChangedStates() {
 		for (const child of this.children) {
-			child.didChangedStates()
+			if (child.didChangedStates) {
+				child.didChangedStates()
+			}
 		}
 	}
 
