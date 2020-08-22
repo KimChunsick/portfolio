@@ -59,8 +59,9 @@ module.exports = {
         test: /\.(png|jpe?g|svg)$/i,
         loader: "file-loader",
         options: {
-          publicPath: "./dist/",
-          name: "[name].[ext]?[hash]"
+          esModule: false,
+          publicPath: "./",
+          name: "[hash].[ext]"
         },
       },
       {
@@ -68,15 +69,20 @@ module.exports = {
         include: SRC,
         loader: 'file-loader',
         options: {
-          publicPath: "./dist/",
-          name: "[name].[ext]?[hash]"
+          esModule: false,
+          publicPath: "./",
+          name: "[hash].[ext]"
         },
-      }
+      },
+      // {
+      //   test: /\.(png|jpe?g|svg)$/i,
+      //   loader: 'url-loader'
+      // }
     ]
   },
   resolve: {
-  	alias: {
+    alias: {
       '@': path.resolve(__dirname, 'src/')
-  	}
+    }
   }
 }
