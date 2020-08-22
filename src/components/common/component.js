@@ -18,7 +18,7 @@ class Component {
 		('setStates:', this.uniqueId)
 		this.willChangeStates(states)
 		this.states = { ...this.states, ...states }
-		if (!!this.ref) {
+		if (this.ref) {
 			this.rerender()
 			for (const child of this.children) {
 				child.render()
@@ -46,9 +46,19 @@ class Component {
 	}
 
 	render(children, attributes = [], tag = 'div') {
-		if (!!this.ref) {
+		if (this.ref) {
+			for (const attribute of this.ref.attributes) {
+				if (attribute.name === 'unique') {
+					continue
+				}
+				this.ref.removeAttribute(attribute.name)
+			}
+			for (const { name, value } of attributes) {
+				this.ref.setAttribute(name, value)
+			}
 			return children
 		}
+
 		const element = document.createElement(tag)
 		element.insertAdjacentHTML('afterbegin', children)
 		element.setAttribute('unique', this.uniqueId)
@@ -61,7 +71,7 @@ class Component {
 	rerender(children) {
 		const target = this.ref
 		target.innerHTML = null
-		if (!!children) {
+		if (children) {
 			target.insertAdjacentHTML('afterbegin', children)
 		} else {
 			target.insertAdjacentHTML('afterbegin', this.render())
