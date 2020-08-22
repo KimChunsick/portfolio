@@ -66,18 +66,13 @@ module.exports = {
       },
       {
         test: /\.mp3$/,
-        include: SRC,
-        loader: 'file-loader',
+        loader: 'url-loader',
         options: {
           esModule: false,
           publicPath: "./",
           name: "[hash].[ext]"
         },
-      },
-      // {
-      //   test: /\.(png|jpe?g|svg)$/i,
-      //   loader: 'url-loader'
-      // }
+      }
     ]
   },
   resolve: {

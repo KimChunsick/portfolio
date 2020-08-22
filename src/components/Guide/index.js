@@ -38,7 +38,7 @@ class Guide extends Component {
   }
 
   render() {
-    const src = this.images[this.states.state]
+    const src = this.images[this.states.state || 'idle']
     const classNames = this.states.visible ? 'character show' : 'character'
     const attributes = [
       { name: 'class', value: classNames },

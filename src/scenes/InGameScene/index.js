@@ -4,6 +4,7 @@ import BG from '@/components/BG'
 import Monologue from '@/components/Monologue'
 import Choices from '@/components/Choices'
 import Guide from '@/components/Guide'
+import AudioManager from '@/components/AudioManager'
 // import script from '@/assets/script/test'
 
 import './style.css'
@@ -16,6 +17,7 @@ class InGameScene extends Component {
     this.monologue = new Monologue()
     this.choices = new Choices()
     this.guide = new Guide()
+    this.audio = new AudioManager()
     this.addChildren(this.dialog, this.bg, this.monologue, this.choices, this.guide)
   }
 
@@ -26,6 +28,10 @@ class InGameScene extends Component {
     setTimeout(() => {
       this.guide.changeState('idle')
     }, 300)
+    document.addEventListener('click', () => {
+      this.audio.changeBGM('Zombie_March')
+      this.audio.playSFX('shooting_star')
+    })
     // setTimeout(() => {
     //   this.bg.changeBG('park_evening')
     // }, 300)
