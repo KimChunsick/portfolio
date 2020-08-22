@@ -1,0 +1,26 @@
+.monologue {
+  transition: opacity 0.3s;
+  z-index: 2;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 10%;
+  opacity: 0;
+  background-color: black;
+}
+
+.monologue.show {
+  opacity: 1;
+}
+
+.monologue > .text {
+  color: white;
+  text-align: center;
+}
