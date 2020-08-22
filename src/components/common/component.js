@@ -5,16 +5,17 @@ class Component {
 		this.states = {}
 		this.children = []
 		this.name = name
-		this.uniqueId = Date.now() + Math.random().toString(16).slice(2)
+		this.uniqueId = `${Date.now()}|${Math.random().toString(16).slice(2)}`
 	}
 
 	mount() {
 		this.ref = document.querySelectorAll(`[unique="${this.uniqueId}"]`)[0]
-		if (!this.ref) console.log(this.name + '이 친구는 ref가 업따! 혹시 render를 한번이라도 했나요??')
+		if (!this.ref) console.warn(this.name + '이 친구는 ref가 업따! 혹시 render를 한번이라도 했나요??')
 		this.mountChildren()
 	}
 
 	setStates(states) {
+		('setStates:', this.uniqueId)
 		this.willChangeStates(states)
 		this.states = { ...this.states, ...states }
 		if (!!this.ref) {
@@ -44,10 +45,16 @@ class Component {
 		return targetArr.map(func).toString().replace(/,/gi, '')
 	}
 
-	render(children, tag = 'div') {
+	render(children, attributes = [], tag = 'div') {
+		if (!!this.ref) {
+			return children
+		}
 		const element = document.createElement(tag)
 		element.insertAdjacentHTML('afterbegin', children)
 		element.setAttribute('unique', this.uniqueId)
+		for (const { name, value } of attributes) {
+			element.setAttribute(name, value)
+		}
 		return element.outerHTML
 	}
 
@@ -83,7 +90,7 @@ class Component {
 	addEventListener(event, callback) {
 		const target = this.ref
 		if (!target) {
-			console.log('이런 아이디는 없구나..', this.uniqueId)
+			console.warn('이런 아이디는 없구나..', this.uniqueId)
 			return
 		}
 		target.addEventListener(event, callback)
