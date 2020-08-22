@@ -10,8 +10,7 @@ class Dialog extends Component {
       nameColor: 'black',
       text: '',
       textSpeed: 0.1,
-      isTyping: false,
-      timer: null
+      isTyping: false
     }
   }
 
@@ -31,7 +30,7 @@ class Dialog extends Component {
     if (this.isTyping) {
       return
     }
-    this.isTyping = true
+    this.states.isTyping = true
     if (!isAdd) {
       this.setStates({ text: '' })
     }
@@ -41,7 +40,7 @@ class Dialog extends Component {
       })
       await this.delay(this.states.textSpeed * 1000)
     }
-    this.isTyping = false
+    this.states.isTyping = false
   }
 
   setName(text, color) {
