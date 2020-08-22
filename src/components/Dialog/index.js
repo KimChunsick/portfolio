@@ -4,7 +4,7 @@ import './style.css'
 
 class Dialog extends Component {
   constructor() {
-    super('InGameScene')
+    super('Dialog')
     this.states = {
       name: '',
       nameColor: 'black',
@@ -20,7 +20,7 @@ class Dialog extends Component {
   }
 
   delay(amount) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       setTimeout(() => {
         resolve()
       }, amount)
