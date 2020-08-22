@@ -20,9 +20,7 @@ class Dialog extends Component {
 
   delay(amount) {
     return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve()
-      }, amount)
+      setTimeout(resolve, amount)
     })
   }
 
