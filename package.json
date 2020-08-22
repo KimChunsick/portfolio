@@ -1,0 +1,42 @@
+{
+	"name": "portfolio",
+	"version": "0.0.1",
+	"description": "My portfolio website",
+	"private": true,
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "webpack-dev-server --progress",
+		"build": "NODE_ENV=production webpack --progress"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/OhDeokwon/portfolio.git"
+	},
+	"author": "Kim Deokwon",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/OhDeokwon/portfolio/issues"
+	},
+	"homepage": "https://github.com/OhDeokwon/portfolio#readme",
+	"devDependencies": {
+		"@babel/core": "^7.11.4",
+		"@babel/preset-env": "^7.11.0",
+		"babel-loader": "^8.1.0",
+		"css-loader": "^4.2.1",
+		"eslint": "^7.7.0",
+		"eslint-config-prettier": "^6.11.0",
+		"eslint-plugin-prettier": "^3.1.4",
+		"file-loader": "^6.0.0",
+		"html-webpack-plugin": "^4.3.0",
+		"optimize-css-assets-webpack-plugin": "^5.0.3",
+		"style-loader": "^1.2.1",
+		"terser-webpack-plugin": "^4.1.0",
+		"webpack": "^4.44.1",
+		"webpack-cli": "^3.3.12",
+		"webpack-dev-server": "^3.11.0"
+	},
+	"dependencies": {
+		"core-js": "^2.6.11"
+	}
+}
