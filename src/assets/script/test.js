@@ -7,6 +7,10 @@ export default [
 		key: 'talk',
 		value: '테스트입니다.'
 	},
+	{
+		key: 'guide',
+		value: 'idle'
+	},
 	{ key: 'sfx', value: 'shooting_star' },
 	{ key: 'bg', value: 'art-gallery2' },
 	{ key: 'add-talk', value: ' 하' },
