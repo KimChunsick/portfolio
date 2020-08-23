@@ -9,6 +9,7 @@ import Name from '@/commands/Name'
 import SFX from '@/commands/SFX'
 import Talk from '@/commands/Talk'
 import Guide from '@/commands/Guide'
+import { ImageShow, ImageHide } from '@/commands/Image'
 
 class ScriptManager {
 	constructor() {
@@ -28,7 +29,9 @@ class ScriptManager {
 			name: Name,
 			sfx: SFX,
 			talk: Talk,
-			guide: Guide
+			guide: Guide,
+			show: ImageShow,
+			hide: ImageHide
 		}
 
 		const blockPair = {}

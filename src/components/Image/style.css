@@ -1,0 +1,16 @@
+.image {
+	transition: all 0.2s;
+	z-index: 1;
+	position: absolute;
+	top: 20%;
+	left: 50%;
+	transform: translateX(-50%);
+	max-width: 80vw;
+	max-height: 50vh;
+	border-radius: 16px;
+	opacity: 0;
+}
+
+.image.show {
+	opacity: 1;
+}
