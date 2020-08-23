@@ -9,7 +9,7 @@ class Dialog extends Component {
 			name: '',
 			nameColor: 'black',
 			text: '',
-			textSpeed: 0.1
+			textSpeed: 0.07
 		}
 		this.isTyping = false
 	}

@@ -6,7 +6,7 @@ class Monologue extends Command {
 	}
 
 	async execute(context) {
-		await context.monologue.show('Chrome 브라우저로 보시는 것을 권장합니다.')
+		await context.monologue.show(this.data.value)
 	}
 
 	async done(context) {

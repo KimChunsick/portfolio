@@ -7,7 +7,7 @@ class Monologue extends Component {
 		super('Monologue')
 		this.states = {
 			text: '',
-			textSpeed: 0.1,
+			textSpeed: 0.07,
 			visible: false
 		}
 		this.isTyping = false
@@ -28,7 +28,8 @@ class Monologue extends Component {
 			return
 		}
 		this.setStates({
-			visible: true
+			visible: true,
+			text: ''
 		})
 		this.isTyping = true
 		for (const character of text) {
