@@ -9,9 +9,9 @@ class Dialog extends Component {
 			name: '',
 			nameColor: 'black',
 			text: '',
-			textSpeed: 0.1,
-			isTyping: false
+			textSpeed: 0.1
 		}
+		this.isTyping = false
 	}
 
 	mount() {
@@ -28,7 +28,7 @@ class Dialog extends Component {
 		if (this.isTyping) {
 			return
 		}
-		this.states.isTyping = true
+		this.isTyping = true
 		if (!isAdd) {
 			this.setStates({ text: '' })
 		}
@@ -38,7 +38,7 @@ class Dialog extends Component {
 			})
 			await this.delay(this.states.textSpeed * 1000)
 		}
-		this.states.isTyping = false
+		this.isTyping = false
 	}
 
 	setName(text, color) {

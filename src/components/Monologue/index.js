@@ -8,9 +8,9 @@ class Monologue extends Component {
 		this.states = {
 			text: '',
 			textSpeed: 0.1,
-			isTyping: false,
 			visible: false
 		}
+		this.isTyping = false
 	}
 
 	mount() {
@@ -30,20 +30,21 @@ class Monologue extends Component {
 		this.setStates({
 			visible: true
 		})
-		this.states.isTyping = true
+		this.isTyping = true
 		for (const character of text) {
 			this.setStates({
 				text: this.states.text + character
 			})
 			await this.delay(this.states.textSpeed * 1000)
 		}
-		this.states.isTyping = false
+		this.isTyping = false
 	}
 
 	async hide() {
 		this.setStates({
 			visible: false
 		})
+		await this.delay(300)
 	}
 
 	render() {

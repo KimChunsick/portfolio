@@ -18,8 +18,8 @@ class InGameScene extends Component {
 		this.monologue = new Monologue()
 		this.choices = new Choices()
 		this.guide = new Guide()
-		this.audio = new AudioManager()
-		this.script = new ScriptManager(script)
+		this.audioManager = new AudioManager()
+		this.scriptManager = new ScriptManager()
 		this.addChildren(
 			this.dialog,
 			this.bg,
@@ -27,35 +27,51 @@ class InGameScene extends Component {
 			this.choices,
 			this.guide
 		)
+
+		this.working = false
+		this.commandIndex = -1
+		this.beforeCommand = null
+		const data = this.scriptManager.parseScript(script)
+		this.blockPair = data.blockPair
+		this.commands = data.commands
+	}
+
+	async execute() {
+		this.working = true
+		if (this.beforeCommand) {
+			await this.beforeCommand.done(this)
+		}
+		this.commandIndex += 1
+		this.beforeCommand = this.commands[this.commandIndex]
+		await this.commands[this.commandIndex].execute(this)
+		this.working = false
+	}
+
+	jump(name) {
+		const index = this.blockPair[name]
+		this.commandIndex = index
 	}
 
 	mount() {
 		super.mount()
-		// this.dialog.setName('테스트', 'red')
-		// this.dialog.doTalk('하하하하하하하하하하하')
-		// setTimeout(() => {
-		//   this.guide.changeState('idle')
-		// }, 300)
-		// document.addEventListener('click', () => {
-		//   this.audio.changeBGM('Zombie_March')
-		//   this.audio.playSFX('shooting_star')
-		// })
-		// setTimeout(() => {
-		//   this.bg.changeBG('park_evening')
-		// }, 300)
-		// setTimeout(() => {
-		//   this.monologue.show('Chrome 브라우저로 보시는 것을 권장합니다.')
-		// }, 1000)
-		// setTimeout(() => {
-		//   this.monologue.hide()
-		// }, 4000)
-		// setTimeout(() => {
-		//   this.choices.show([
-		//     { text: '1번 테스트', value: 'block1' },
-		//     { text: '2번 테스트', value: 'block1' },
-		//     { text: '3번 테스트', value: 'block1' },
-		//   ])
-		// }, 4500)
+		const event =
+			navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPhone/i)
+				? 'touchstart'
+				: 'click'
+		document.addEventListener(event, () => {
+			if (
+				this.working ||
+				this.dialog.isTyping ||
+				this.monologue.isTyping ||
+				this.choices.isChoosing
+			) {
+				return
+			}
+			this.execute()
+		})
+
+		// 첫 명령어는 자동실행
+		this.execute()
 	}
 
 	render() {

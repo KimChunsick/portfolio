@@ -11,6 +11,14 @@
 	font-family: 'Spoqa Han Sans', 'Sans-serif';
 }
 
+*:not(input):not(textarea) {
+	-ms-user-select: none;
+	-moz-user-select: -moz-none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
 /* RESET CSS */
 html,
 body,
