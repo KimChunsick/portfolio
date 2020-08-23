@@ -8,6 +8,7 @@ import Monologue from '@/commands/Monologue'
 import Name from '@/commands/Name'
 import SFX from '@/commands/SFX'
 import Talk from '@/commands/Talk'
+import Guide from '@/commands/Guide'
 
 class ScriptManager {
 	constructor() {
@@ -26,7 +27,8 @@ class ScriptManager {
 			monologue: Monologue,
 			name: Name,
 			sfx: SFX,
-			talk: Talk
+			talk: Talk,
+			guide: Guide
 		}
 
 		const blockPair = {}

@@ -6,7 +6,7 @@ import Choices from '@/components/Choices'
 import Guide from '@/components/Guide'
 import AudioManager from '@/components/AudioManager'
 import ScriptManager from '@/components/ScriptManager'
-import script from '@/assets/script/test'
+import script from '@/assets/script'
 
 import './style.css'
 

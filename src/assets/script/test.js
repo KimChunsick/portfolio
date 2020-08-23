@@ -1,17 +1,17 @@
 export default [
 	{ key: 'monologue', value: 'Chrome 브라우저로 보시는 것을 권장합니다.' },
-	{ key: 'bg', value: 'park_evening' },
+	{ key: 'bg', value: 'art-gallery1' },
 	{ key: 'bgm', value: 'Sad_Minuet' },
 	{ key: 'name', value: '테스트', color: 'red' },
 	{
 		key: 'talk',
 		value: '테스트입니다.'
 	},
-	// { key: 'sfx', value: 'shooting_star' },
+	{ key: 'sfx', value: 'shooting_star' },
+	{ key: 'bg', value: 'art-gallery2' },
 	{ key: 'add-talk', value: ' 하' },
 	{ key: 'add-talk', value: ' 하' },
 	{ key: 'add-talk', value: ' 하' },
-	// { key: 'bg', value: 'park_night' },
 	{
 		key: 'choices',
 		value: [
