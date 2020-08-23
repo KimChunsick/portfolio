@@ -43,4 +43,3 @@ jobs:
           PERSONAL_TOKEN: ${{secrets.GH_DEPLOY}}
           PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: ./public
-          SCRIPT_MODE: true
