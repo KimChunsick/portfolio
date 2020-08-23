@@ -11,7 +11,8 @@ class BG extends Component {
 		this.bgs = {
 			'art-gallery-hall': require('@/assets/images/bgs/art-gallery-hall.jpg'),
 			'art-gallery1': require('@/assets/images/bgs/art-gallery1.jpg'),
-			'art-gallery2': require('@/assets/images/bgs/art-gallery2.jpg')
+			'art-gallery2': require('@/assets/images/bgs/art-gallery2.jpg'),
+			'art-gallery3': require('@/assets/images/bgs/art-gallery3.jpg')
 		}
 	}
 

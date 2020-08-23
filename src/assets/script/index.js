@@ -7,12 +7,12 @@ export default [
 		value: '나',
 		color: 'white'
 	},
-	{ key: 'talk', value: '머리가 깨질듯이 아프다.' },
+	{ key: 'talk', value: '머리가 깨질 듯이 아프다.' },
 	{ key: 'add-talk', value: ' 어쩌다 이곳에 왔는지 기억나지 않는다.' },
 	{
 		key: 'talk',
 		value:
-			'다만, 눈앞에 있는 유사 고품격 포트폴리오를 보니 이곳에 오길 잘했다는 생각만이 머리를 스쳐지나간다.'
+			'다만, 눈앞에 있는 화려한 인테리어를 보니 이곳에 오길 잘했다는 생각만이 머리를 스쳐 지나간다.'
 	},
 	{
 		key: 'name',
@@ -22,7 +22,7 @@ export default [
 	{ key: 'guide', value: 'idle' },
 	{
 		key: 'talk',
-		value: '유사 고품격 포트폴리오 갤러리에 오신것을 환경합니다.'
+		value: '유사 고품격 포트폴리오 갤러리에 오신 것을 환영합니다.'
 	},
 	{
 		key: 'choices',
@@ -65,7 +65,7 @@ export default [
 	{
 		key: 'talk',
 		value:
-			'이곳은 누군가의 유사 고품격 포트폴리오가 저장된 곳입니다. 총 3개의 관람구역으로 나뉘어져있으며 이곳은 현재 메인홀입니다.'
+			'이곳은 누군가의 유사 고품격 포트폴리오가 전시된 곳입니다. 총 3개의 관람 구역으로 나뉘어 있으며 이곳은 현재 메인홀입니다.'
 	},
 	{ key: 'jump', value: 'after_first_meet' },
 	{ key: 'block', value: 'where_am_i' },
@@ -74,7 +74,7 @@ export default [
 		value: '나',
 		color: 'white'
 	},
-	{ key: 'talk', value: '이곳은.. 어디죠?' },
+	{ key: 'talk', value: '이곳은.. 어딥니까?' },
 	{
 		key: 'name',
 		value: '???',
@@ -83,7 +83,7 @@ export default [
 	{
 		key: 'talk',
 		value:
-			'이곳은 누군가의 유사 고품격 포트폴리오가 저장된 곳입니다. 총 3개의 관람구역으로 나뉘어져있으며 이곳은 현재 메인홀입니다.'
+			'이곳은 누군가의 유사 고품격 포트폴리오가 전시된 곳입니다. 총 3개의 관람구역으로 나뉘어 있으며 이곳은 현재 메인홀입니다.'
 	},
 	{
 		key: 'name',
@@ -113,13 +113,16 @@ export default [
 	},
 	{
 		key: 'talk',
-		value:
-			'그런것보다, 마침 갤러리에 오셨는데 포트폴리오를 관람하시는건 어떻습니까?'
+		value: '그런 것보다...'
+	},
+	{
+		key: 'add-talk',
+		value: ' 마침 갤러리에 오셨는데 포트폴리오를 관람하시는 건 어떻습니까?'
 	},
 	{
 		key: 'monologue',
 		value:
-			'내 질문들에 교묘하게 대답했지만, 중요하지는 않은 것 같다. 내 머릿속은 무언가에 이끌린듯이 어서 포트폴리오를 관람하고 싶다는 생각 뿐이다.'
+			'내 질문들에 교묘하게 대답했지만, 중요하지는 않은 것 같다. 내 머릿속은 무언가에 이끌린 듯이 어서 포트폴리오를 관람하고 싶다는 생각뿐이다.'
 	},
 	{
 		key: 'name',
@@ -132,11 +135,29 @@ export default [
 	},
 	{
 		key: 'name',
-		value: '개발자',
-		color: 'red'
+		value: '안내원',
+		color: '#9775fa'
 	},
 	{
 		key: 'talk',
-		value: '이후는 개발중입니다.'
-	}
+		value: '잘 생각하셨습니다. Web, iOS, Game등의 관람구역이 있습니다.'
+	},
+	{
+		key: 'talk',
+		value: '어느 곳을 관람하시겠습니까?'
+	},
+	{
+		key: 'choices',
+		value: [
+			{ text: 'Web', value: 'web' },
+			{ text: 'iOS', value: 'ios' },
+			{ text: 'Game', value: 'game' }
+		]
+	},
+	{ key: 'block', value: 'web' },
+	{ key: 'sfx', value: 'Walk_On_Concrete' },
+	{ key: 'block', value: 'ios' },
+	{ key: 'sfx', value: 'Walk_On_Concrete' },
+	{ key: 'block', value: 'game' },
+	{ key: 'sfx', value: 'Walk_On_Concrete' }
 ]
