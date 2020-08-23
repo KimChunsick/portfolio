@@ -1,6 +1,6 @@
 export default [
 	{ key: 'monologue', value: 'Chrome 브라우저로 보시는 것을 권장합니다.' },
-	{ key: 'bg', value: 'art-gallery1' },
+	{ key: 'bg', value: 'art-gallery-hall' },
 	{ key: 'bgm', value: 'Sad_Minuet' },
 	{
 		key: 'name',
