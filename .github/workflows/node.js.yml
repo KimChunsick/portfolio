@@ -5,9 +5,9 @@ name: Deploy action
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
@@ -19,28 +19,28 @@ jobs:
         node-version: [10.x, 12.x, 14.x]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up environment
-      uses: actions/setup-node@v1.4.3
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Cache node_modules
-      uses: actions/cache@v2.1.1
-      with:
-        path: node_modules
-        key: ${{runner.OS}}-build-${{hashFiles('**/package-lock.json')}}
-        restore-keys: |
+      - uses: actions/checkout@v2
+      - name: Set up environment
+        uses: actions/setup-node@v1.4.3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Cache node_modules
+        uses: actions/cache@v2.1.1
+        with:
+          path: node_modules
+          key: ${{runner.OS}}-build-${{hashFiles('**/package-lock.json')}}
+          restore-keys: |
             ${{ runner.OS }}-build-${{ runner.OS }}-
-    - name: Install dependencies
-      run: npm install
-    - name: Build application
-      run: npm run build
-      env:
+      - name: Install dependencies
+        run: npm install
+      - name: Build application
+        run: npm run build
+        env:
           NODE_ENV: production
-    - name: Deploy to gh-pages
-      uses: peaceiris/actions-gh-pages@v3.6.4
-      env:
-        PERSONAL_TOKEN: ${{secrets.GH_DEPLOY}}
-        PUBLISH_BRANCH: gh-pages
-        PUBLISH_DIR: ./public
-        SCRIPT_MODE: true
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3.6.4
+        with:
+          PERSONAL_TOKEN: ${{secrets.GH_DEPLOY}}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: ./public
+          SCRIPT_MODE: true
