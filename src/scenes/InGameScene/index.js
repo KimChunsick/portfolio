@@ -4,6 +4,7 @@ import BG from '@/components/BG'
 import Monologue from '@/components/Monologue'
 import Choices from '@/components/Choices'
 import Guide from '@/components/Guide'
+import Image from '@/components/Image'
 import AudioManager from '@/components/AudioManager'
 import ScriptManager from '@/components/ScriptManager'
 import script from '@/assets/script'
@@ -18,6 +19,7 @@ class InGameScene extends Component {
 		this.monologue = new Monologue()
 		this.choices = new Choices()
 		this.guide = new Guide()
+		this.image = new Image()
 		this.audioManager = new AudioManager()
 		this.scriptManager = new ScriptManager()
 		this.addChildren(
@@ -25,7 +27,8 @@ class InGameScene extends Component {
 			this.bg,
 			this.monologue,
 			this.choices,
-			this.guide
+			this.guide,
+			this.image
 		)
 
 		this.working = false
@@ -81,7 +84,8 @@ class InGameScene extends Component {
       ${this.dialog.render()}
       ${this.monologue.render()}
       ${this.choices.render()}
-      ${this.guide.render()}
+			${this.guide.render()}
+			${this.image.render()}
       `,
 			[{ name: 'class', value: 'in-game-scene' }],
 			'section'

@@ -1,6 +1,6 @@
 .monologue {
 	transition: opacity 0.3s;
-	z-index: 2;
+	z-index: 3;
 	position: fixed;
 	left: 0;
 	top: 0;
@@ -23,4 +23,5 @@
 .monologue > .text {
 	color: white;
 	text-align: center;
+	word-break: keep-all;
 }
