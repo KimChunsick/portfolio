@@ -10,7 +10,10 @@ class Component {
 
 	mount() {
 		this.ref = document.querySelectorAll(`[unique="${this.uniqueId}"]`)[0]
-		if (!this.ref) console.warn(this.name + '이 친구는 ref가 업따! 혹시 render를 한번이라도 했나요??')
+		if (!this.ref)
+			console.warn(
+				this.name + '이 친구는 ref가 업따! 혹시 render를 한번이라도 했나요??'
+			)
 		this.mountChildren()
 	}
 
@@ -31,7 +34,7 @@ class Component {
 	}
 
 	removeChild(child) {
-		this.children = this.children.filter((data) => {
+		this.children = this.children.filter(data => {
 			return data.uniqueId !== child.uniqueId
 		})
 	}
