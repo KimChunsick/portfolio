@@ -7,6 +7,7 @@ export default [
 		key: 'talk',
 		value: '테스트입니다.'
 	},
+	{ key: 'show', value: 'resume1' },
 	{
 		key: 'guide',
 		value: 'idle'
@@ -16,6 +17,7 @@ export default [
 	{ key: 'add-talk', value: ' 하' },
 	{ key: 'add-talk', value: ' 하' },
 	{ key: 'add-talk', value: ' 하' },
+	{ key: 'hide' },
 	{
 		key: 'choices',
 		value: [
