@@ -85,7 +85,7 @@ const prologue = [
 	{
 		key: keys.talk,
 		value:
-			'이곳의 원장님이신 방춘덕님의 포트폴리오 갤러리입니다. 총 3개의 관람 구역으로 나뉘어 있으며 이곳은 현재 메인홀입니다.'
+			'이곳의 원장님이신 김춘식님의 포트폴리오 갤러리입니다. 총 3개의 관람 구역으로 나뉘어 있으며 이곳은 현재 메인홀입니다.'
 	},
 	{ key: keys.jump, value: 'after_first_meet' },
 	{ key: keys.block, value: 'where_am_i' },
@@ -103,7 +103,7 @@ const prologue = [
 	{
 		key: keys.talk,
 		value:
-			'이곳의 원장님이신 방춘덕님의 포트폴리오 갤러리입니다. 총 3개의 관람 구역으로 나뉘어 있으며 이곳은 현재 메인홀입니다.'
+			'이곳의 원장님이신 김춘식님의 포트폴리오 갤러리입니다. 총 3개의 관람 구역으로 나뉘어 있으며 이곳은 현재 메인홀입니다.'
 	},
 	{
 		key: keys.name,
@@ -301,7 +301,7 @@ const ios = [
 	{ key: keys.block, value: 'ios' },
 	{ key: keys.sfx, value: 'Walk_On_Concrete' },
 	{ key: keys.bg, value: 'art-gallery2' },
-	{ key: keys.name, value: '원장 (방춘덕)', color: 'red' },
+	{ key: keys.name, value: '원장 (김춘식)', color: 'red' },
 	{
 		key: keys.talk,
 		value: '현재 개발중입니다.'
@@ -314,7 +314,7 @@ const game = [
 	{ key: keys.block, value: 'game' },
 	{ key: keys.sfx, value: 'Walk_On_Concrete' },
 	{ key: keys.bg, value: 'art-gallery3' },
-	{ key: keys.name, value: '원장 (방춘덕)', color: 'red' },
+	{ key: keys.name, value: '원장 (김춘식)', color: 'red' },
 	{
 		key: keys.talk,
 		value: '현재 개발중입니다.'
