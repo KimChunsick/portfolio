@@ -25,7 +25,6 @@ jobs:
       - name: build webpack
         run: |
           npm run build
-          echo "kimchunsick.me" > build/CNAME
         env:
           NODE_ENV: production
 
